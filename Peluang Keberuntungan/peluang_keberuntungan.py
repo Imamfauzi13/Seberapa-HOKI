@@ -10,98 +10,29 @@ Original file is located at
 !pip install streamlit pyngrok --quiet
 kode = """
 import streamlit as st
-import matplotlib.pyplot as plt
-import numpy as np
 import time
 
-def calculate_probability(event_occurrences, total_outcomes):
-    """Calculates the probability of an event."""
-    if total_outcomes <= 0:
-        return 0.0, "Total outcomes must be greater than zero."
-    if event_occurrences < 0:
-        return 0.0, "Event occurrences cannot be negative."
-    if event_occurrences > total_outcomes:
-        return 0.0, "Event occurrences cannot exceed total outcomes."
+st.set_page_config(page_title="Kalkulator Peluang", page_icon="🎲")
 
-    probability = event_occurrences / total_outcomes
-    return probability, None
+st.title("🎲 Kalkulator Peluang Sederhana")
+st.write("Aplikasi ini menghitung peluang suatu kejadian dengan rumus dasar:")
+st.latex(r"P(A) = \frac{n(A)}{n(S)}")
 
-def plot_probability_animation(probability):
-    """Generates a simple bar chart animation for probability."""
-    fig, ax = plt.subplots(figsize=(6, 2))
-    ax.set_xlim(0, 1)
-    ax.set_ylim(0, 1)
-    ax.set_xticks([0, 0.25, 0.5, 0.75, 1])
-    ax.set_yticks([])
-    ax.set_title("Visualisasi Peluang")
-    ax.set_xlabel("Peluang")
+# Input
+n_A = st.number_input("Masukkan banyak kejadian (n(A)):", min_value=0, value=1)
+n_S = st.number_input("Masukkan banyak ruang sampel (n(S)):", min_value=1, value=1)
 
-    bar = ax.barh(0.5, 0, height=0.4, color='skyblue')
+# Animasi sederhana (tanpa loop eksplisit)
+if st.button("🎯 Hitung Peluang"):
+    placeholder = st.empty()
 
-    progress_text = st.empty()
-    for i in range(1, 11):
-        current_width = probability * (i / 10)
-        bar[0].set_width(current_width)
-        progress_text.text(f"Animasi: {int(current_width * 100)}%")
-        fig_placeholder.pyplot(fig)
-        time.sleep(0.1)
+    # Simulasi animasi loading
+    placeholder.markdown("⏳ Menghitung peluang .")
+    time.sleep(0.3)
+    placeholder.markdown("⏳ Menghitung peluang ..")
+    time.sleep(0.3)
+    placeholder.markdown("⏳ Menghitung peluang ...")
+    time.sleep(0.3)
 
-    plt.close(fig) # Close the figure to prevent memory issues
-
-# Streamlit UI
-st.set_page_config(page_title="Kalkulator Peluang", layout="centered")
-
-st.title("Kalkulator Peluang Sederhana")
-
-st.write("""
-Selamat datang di Kalkulator Peluang!
-Masukkan jumlah kejadian yang diinginkan dan total kemungkinan hasil.
-""")
-
-# Input fields
-st.header("Input Data")
-event_occurrences = st.number_input(
-    "Jumlah Kejadian yang Diinginkan:",
-    min_value=0,
-    value=1,
-    step=1,
-    help="Jumlah kali kejadian yang Anda minati dapat terjadi."
-)
-
-total_outcomes = st.number_input(
-    "Total Kemungkinan Hasil:",
-    min_value=1,
-    value=2,
-    step=1,
-    help="Total semua hasil yang mungkin terjadi."
-)
-
-# Calculate button
-if st.button("Hitung Peluang"):
-    st.subheader("Hasil Perhitungan")
-    probability, error = calculate_probability(event_occurrences, total_outcomes)
-
-    if error:
-        st.error(f"Error: {error}")
-    else:
-        st.success(f"Peluang kejadian adalah: **{probability:.4f}**")
-        st.info(f"Dalam persentase: **{probability * 100:.2f}%**")
-
-        st.subheader("Animasi Visualisasi Peluang")
-        fig_placeholder = st.empty() # Placeholder for the plot
-        plot_probability_animation(probability)
-
-st.markdown("---")
-st.write("Dibuat dengan ❤️ oleh Program Python")
-
-!ngrok config add-authtoken 2uzt3zck7DsFcgSphPuyEpHgUiN_3gijm7UyXNThGByqVsBhA
-
-from pyngrok import ngrok
-
-# Jalankan streamlit sebagai background process
-!streamlit run bmi_app.py &>/dev/null &
-
-# Hubungkan ke Streamlit via ngrok (versi baru)
-public_url = ngrok.connect(addr="8533", proto="http")
-print("Aplikasi bisa diakses di link berikut:")
-print(public_url)
+    peluang = n_A / n_S
+    placeholder.success(f"✅ Peluang kejadian adalah: *{peluang:.4f}*")
