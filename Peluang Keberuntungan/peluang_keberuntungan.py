@@ -35,4 +35,4 @@ if st.button("🎯 Hitung Peluang"):
     time.sleep(0.3)
 
     peluang = n_A / n_S
-    placeholder.success(f"✅ Peluang kejadian adalah: *{peluang:.4f}*")
+    """placeholder.success(f"✅ Peluang kejadian adalah: *{peluang:.4f}*")"""
