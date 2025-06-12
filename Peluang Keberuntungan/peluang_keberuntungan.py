@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1RCToderPauk_y1iSPPNe_ho2UynPItej
 """
 
-!pip install streamlit pyngrok --quiet
-
 import streamlit as st
 import time
 
@@ -22,7 +20,6 @@ st.latex(r"P(A) = \frac{n(A)}{n(S)}")
 n_A = st.number_input("Masukkan banyak kejadian (n(A)):", min_value=0, value=1)
 n_S = st.number_input("Masukkan banyak ruang sampel (n(S)):", min_value=1, value=1)
 
-# Animasi sederhana (tanpa loop eksplisit)
 if st.button("🎯 Hitung Peluang"):
     placeholder = st.empty()
 
@@ -35,4 +32,4 @@ if st.button("🎯 Hitung Peluang"):
     time.sleep(0.3)
 
     peluang = n_A / n_S
-    """placeholder.success(f"✅ Peluang kejadian adalah: *{peluang:.4f}*")"""
+    placeholder.success(f"✅ Peluang kejadian adalah: *{peluang:.4f}*")
